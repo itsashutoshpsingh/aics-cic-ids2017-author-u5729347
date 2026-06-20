@@ -1,19 +1,32 @@
-WM9PH-15 — Machine Learning Intrusion Detection (CIC-IDS2017)
+# CIC-IDS2017 Intrusion Detection
 
-CONTENTS OF THIS SUBMISSION (per the assignment brief — single zip):
-  1. REPORT
-       AICS_Report.docx           <- primary report (open in Microsoft Word; figures render in Word)
-       AICS_Report_LaTeX_alt.pdf  <- same project, LaTeX/PDF format (figure-perfect)
-  2. JUPYTER NOTEBOOK(S)
-       01_intrusion_detection_BEST.ipynb          <- main pipeline (binary + multiclass + robustness)
-       02_intrusion_detection_FULL_DATASET.ipynb  <- full-dataset variant
-  3. TRAINED MODEL + LOAD/TEST CODE
-       models/ids_random_forest.joblib            <- REPLACE with the model your own run saves
-       (the notebook's final cell loads the model and re-runs the test exactly as in the report)
+Machine-learning intrusion detection on the CIC-IDS2017 flow dataset for WM9PH-15.
+The project covers binary detection (benign vs malicious), multi-class attack
+attribution, and robustness checks (time-ordered split, unseen-attack and noise tests).
 
-BEFORE SUBMITTING:
-  - Put your NAME and STUDENT ID on the report cover.
-  - Rewrite Appendix A (AI declaration) truthfully, with your verbatim prompts.
-  - Re-run the notebook on your local CIC-IDS2017 copy so the notebook outputs and the
-    saved model are YOUR executed results (numbers may differ trivially by seed/library).
-  - Keep references for any extra libraries (all are free: scikit-learn, numpy, pandas, matplotlib).
+## Files
+
+| File | Purpose |
+|------|---------|
+| `intrusion_detection.ipynb` | Full pipeline: load, clean, compare models, tune, evaluate, robustness, save model |
+| `ids_utils.py` | Shared data loading, cleaning and splitting |
+| `load_and_test.py` | Loads the saved model and re-runs the binary test |
+| `models/ids_random_forest.joblib` | Trained Random Forest |
+| `requirements.txt` | Dependencies |
+
+## Dataset
+
+CIC-IDS2017, `MachineLearningCVE` CSV folder only, from the Canadian Institute for
+Cybersecurity: https://www.unb.ca/cic/datasets/ids-2017.html
+The raw CSVs are large and public, so they are not stored here; download them and set
+`DATA_DIR` at the top of the notebook and of `load_and_test.py`.
+
+## Run
+
+```
+pip install -r requirements.txt
+jupyter notebook intrusion_detection.ipynb     # run top to bottom
+python load_and_test.py                        # reload the model and score the test set
+```
+
+All dependencies are free and standard (numpy, pandas, scikit-learn, matplotlib, joblib).
